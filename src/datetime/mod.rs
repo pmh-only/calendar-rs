@@ -1,11 +1,8 @@
-use std::{num::ParseIntError, fmt::Display};
+use std::fmt::Display;
 
-#[derive(Debug)]
-pub enum DatetimeError {
-  RangeError,
-  ParseError(ParseIntError),
-  TooFewArgumentsError
-}
+use self::error::DatetimeError;
+
+pub mod error;
 
 pub struct Date {
   pub year: u16,

@@ -1,14 +1,8 @@
-use datatypes::task::{Task, TaskConversationError};
+use std::error::Error;
 
-use crate::datatypes::task::TaskProximity;
+mod task;
+mod datetime;
 
-mod datatypes;
-
-fn main() -> Result<(), TaskConversationError> {
-  let task_str = "2023-01-01.10:30 VH Td hi";
-  let task = Task::try_from(task_str.to_string())?;
-
-  println!("{}", matches!(task.proximity, TaskProximity::VeryHigh));
-
+fn main() -> Result<(), Box<dyn Error>> {
   Ok(())
 }

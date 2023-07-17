@@ -1,13 +1,10 @@
-use std::{num::ParseIntError, fmt::Display};
+use std::fmt::Display;
 
-use super::datetime::{Datetime, DatetimeError};
+use crate::datetime::{Datetime, error::DatetimeError};
 
-#[derive(Debug)]
-pub enum TaskConversationError {
-  RangeError,
-  ParseError(ParseIntError),
-  TooFewArgumentsError
-}
+use self::error::TaskConversationError;
+
+pub mod error;
 
 pub enum TaskProximity {
   VeryHigh,
