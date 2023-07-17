@@ -1,12 +1,14 @@
-use datatypes::datetime::{DatetimeError, Datetime};
+use datatypes::task::{Task, TaskConversationError};
+
+use crate::datatypes::task::TaskProximity;
 
 mod datatypes;
 
-fn main() -> Result<(), DatetimeError> {
-  let datetime: Datetime =
-    String::from("2023-1-1.10:50").try_into()?;
+fn main() -> Result<(), TaskConversationError> {
+  let task_str = "2023-01-01.10:30 VH Td hi";
+  let task = Task::try_from(task_str.to_string())?;
 
-  println!("{}", datetime);
+  println!("{}", matches!(task.proximity, TaskProximity::VeryHigh));
 
   Ok(())
 }
