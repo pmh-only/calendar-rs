@@ -14,10 +14,10 @@ pub enum TaskProximity {
   VeryLow
 }
 
-impl TryFrom<String> for TaskProximity {
+impl TryFrom<&str> for TaskProximity {
   type Error = TaskConversationError;
-  fn try_from(value: String) -> Result<Self, Self::Error> {
-    match value.as_str() {
+  fn try_from(value: &str) -> Result<Self, Self::Error> {
+    match value {
       "VH" => Ok(TaskProximity::VeryHigh),
       "H" => Ok(TaskProximity::High),
       "M" => Ok(TaskProximity::Medium),
@@ -54,10 +54,10 @@ pub enum TaskStatus {
   Deleted
 }
 
-impl TryFrom<String> for TaskStatus {
+impl TryFrom<&str> for TaskStatus {
   type Error = TaskConversationError;
-  fn try_from(value: String) -> Result<Self, Self::Error> {
-    match value.as_str() {
+  fn try_from(value: &str) -> Result<Self, Self::Error> {
+    match value {
       "Td" => Ok(TaskStatus::Todo),
       "In" => Ok(TaskStatus::InProgress),
       "Fn" => Ok(TaskStatus::Finished),
@@ -92,9 +92,9 @@ pub struct Task {
   pub content: String
 }
 
-impl TryFrom<String> for Task {
+impl TryFrom<&str> for Task {
   type Error = TaskConversationError;
-  fn try_from(value: String) -> Result<Self, Self::Error> {
+  fn try_from(value: &str) -> Result<Self, Self::Error> {
     let splited: Vec<&str> = value.split(' ').collect();
 
     if splited.len() < 4 {
@@ -102,7 +102,7 @@ impl TryFrom<String> for Task {
     }
 
     let parsed_datetime =
-      Datetime::try_from(splited[0].to_owned());
+      Datetime::try_from(splited[0]);
 
     if parsed_datetime.is_err() {
       return match parsed_datetime.err().unwrap() {
@@ -118,10 +118,10 @@ impl TryFrom<String> for Task {
     }
 
     let parsed_proximity =
-      TaskProximity::try_from(splited[1].to_string())?;
+      TaskProximity::try_from(splited[1])?;
 
     let parsed_status =
-      TaskStatus::try_from(splited[2].to_string())?;
+      TaskStatus::try_from(splited[2])?;
 
     Ok(Task {
       datetime: parsed_datetime.unwrap(),

@@ -58,9 +58,9 @@ impl TryFrom<(i32, i32, i32)> for Date {
   }
 }
 
-impl TryFrom<String> for Date {
+impl TryFrom<&str> for Date {
   type Error = DatetimeError;
-  fn try_from(value: String) -> Result<Self, Self::Error> {
+  fn try_from(value: &str) -> Result<Self, Self::Error> {
     let splited: Vec<&str> = value.split("-").collect();
     
     if splited.len() < 3 {
@@ -135,9 +135,9 @@ impl TryFrom<(i32, i32)> for Time {
   }
 }
 
-impl TryFrom<String> for Time {
+impl TryFrom<&str> for Time {
   type Error = DatetimeError;
-  fn try_from(value: String) -> Result<Self, Self::Error> {
+  fn try_from(value: &str) -> Result<Self, Self::Error> {
     let splited: Vec<&str> = value.split(":").collect();
     
     if splited.len() < 2 {
@@ -187,9 +187,9 @@ impl TryFrom<((i32, i32, i32), (i32, i32))> for Datetime {
   }
 }
 
-impl TryFrom<String> for Datetime {
+impl TryFrom<&str> for Datetime {
   type Error = DatetimeError;
-  fn try_from(value: String) -> Result<Self, Self::Error> {
+  fn try_from(value: &str) -> Result<Self, Self::Error> {
     let splited: Vec<String> = value.split(".").map(|x| x.to_owned()).collect();
     
     if splited.len() < 2 {
@@ -197,8 +197,8 @@ impl TryFrom<String> for Datetime {
     }
 
     Ok(Datetime {
-      date: splited[0].clone().try_into()?,
-      time: splited[1].clone().try_into()?
+      date: splited[0].as_str().try_into()?,
+      time: splited[1].as_str().try_into()?
     })
   }
 }

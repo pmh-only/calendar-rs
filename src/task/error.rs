@@ -1,4 +1,4 @@
-use std::{num::ParseIntError, fmt::{Display, Formatter, self}};
+use std::{num::ParseIntError, fmt::{Display, Formatter, self}, error::Error};
 
 #[derive(Debug)]
 pub enum TaskConversationError {
@@ -21,3 +21,5 @@ impl Display for TaskConversationError {
     })
   }
 }
+
+impl Error for TaskConversationError {}
